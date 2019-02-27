@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.p2pdinner.proto";
+option java_outer_classname = "DinnerListingProto";
+
+package com.p2pdinner;
+
+// The greeting service definition.
+service DinnerListingsService {
+  // Sends a greeting
+  rpc AddDinnerListing (MenuItem) returns (ListingResponse) {}
+  rpc UpdateDinnerListing (MenuItem) returns (ListingResponse) {}
+  rpc DeleteDinnerListing (MenuItem) returns (ListingResponse) {}
+}
+
+
+
+
+// The request message containing the user's name.
+message MenuItem {
+  string id            = 1;
+  int32 profileId      = 2;
+  string title                  = 3;
+  string description            = 4;
+  bool isActive                 = 5;
+  string addressLine1           = 6;
+  string addressLine2           = 7;
+  string zipCode = 8;
+  string city = 9;
+  string state = 10;
+  int32 availableQuantity = 11;
+  double costPerItem = 12;
+  string imageUrl = 13;
+  int64 startDate = 14;
+  int64 endDate = 15;
+  int64 closeDate = 16;
+  message DinnerCategory {
+    int32 id = 1;
+    string name = 2;
+  }
+
+  repeated DinnerCategory categories = 17;
+  message DinnerSpecialNeeds {
+    int32 id = 1;
+    string name = 2;
+  }
+  repeated DinnerSpecialNeeds specialNeeds = 18;
+  message DinnerDelivery {
+    int32 id = 1;
+    string name = 2;
+  }
+  repeated DinnerDelivery deliveries = 19;
+}
+
+// The response message containing the greetings
+message ListingResponse {
+  bool success = 1;
+}
