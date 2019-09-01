@@ -12,6 +12,7 @@ service DinnerListingsService {
   rpc AddDinnerListing (MenuItem) returns (ListingResponse) {}
   rpc UpdateDinnerListing (MenuItem) returns (ListingResponse) {}
   rpc DeleteDinnerListing (MenuItem) returns (ListingResponse) {}
+  rpc ActiveDinnerListings (ActiveListingsRequest) returns (ActiveListingsResponse) {}
 }
 
 
@@ -56,4 +57,12 @@ message MenuItem {
 // The response message containing the greetings
 message ListingResponse {
   bool success = 1;
+}
+
+message ActiveListingsRequest {
+
+}
+
+message ActiveListingsResponse {
+  repeated MenuItem menuItems = 1;
 }
