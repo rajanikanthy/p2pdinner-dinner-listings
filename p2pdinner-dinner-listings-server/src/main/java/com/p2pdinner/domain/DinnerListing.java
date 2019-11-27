@@ -3,11 +3,13 @@ package com.p2pdinner.domain;
 
 import com.p2pdinner.proto.MenuItem;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
+@Document(collection = "listing")
 public class DinnerListing implements Serializable {
     private static final long serialVersionUID = 1L;
 

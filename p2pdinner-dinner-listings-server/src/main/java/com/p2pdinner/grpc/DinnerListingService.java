@@ -8,6 +8,7 @@ import com.p2pdinner.proto.DinnerListingsServiceGrpc;
 import com.p2pdinner.proto.ListingResponse;
 import com.p2pdinner.proto.MenuItem;
 import io.grpc.stub.StreamObserver;
+import org.bson.types.ObjectId;
 import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,7 @@ public class DinnerListingService extends DinnerListingsServiceGrpc.DinnerListin
     public void addDinnerListing(MenuItem request, StreamObserver<ListingResponse> responseObserver) {
         logger.info("DinnerListingService >> addDinnerListing >>  {}", request.getTitle());
         DinnerListing listing = new MenuItemToDinnerListingTransformation().apply(request);
-        mongoTemplate.insert(listing, "listing");
+        mongoTemplate.insert(listing);
         ListingResponse response = ListingResponse.newBuilder()
                 .setSuccess(true)
                 .build();
@@ -71,10 +72,10 @@ public class DinnerListingService extends DinnerListingsServiceGrpc.DinnerListin
 
     @Override
     public void deleteDinnerListing(MenuItem request, StreamObserver<ListingResponse> responseObserver) {
-        logger.info("DinnerListingService >> deleteDinnerListing >> {}", request.getTitle());
+        logger.info("DinnerListingService >> deleteDinnerListing >> title: {}, id: {}", request.getTitle(), request.getId());
         DeleteResult result = mongoTemplate.remove(query(where("_id")
                 .is(request.getId())
-                .andOperator(where("profileId").is(request.getProfileId()))));
+                .andOperator(where("profileId").is(request.getProfileId()))), DinnerListing.class);
 
         responseObserver.onNext(ListingResponse.newBuilder().setSuccess(result.wasAcknowledged()).build());
         responseObserver.onCompleted();
