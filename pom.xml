@@ -18,7 +18,7 @@
         <module>p2pdinner-dinner-listings-client</module>
     </modules>
     <properties>
-        <protobuf.version>1.18.0</protobuf.version>
+        <protobuf.version>1.53.0</protobuf.version>
     </properties>
     <dependencies>
         <dependency>
